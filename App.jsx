@@ -1,1 +1,0 @@
-export default function App(){return <div className='min-h-screen bg-slate-950 text-white p-10'><h1 className='text-6xl font-bold'>HireNeuronX</h1><p className='mt-4 text-slate-300'>Elite Talent. Faster Growth.</p></div>}
