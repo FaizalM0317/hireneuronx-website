@@ -115,6 +115,77 @@ export default function App() {
           </div>
         </div>
       </section>
-    </div>
-  );
-}
+
+{/* Why Us */}
+<section className="max-w-7xl mx-auto px-6 py-16">
+  <div className="grid md:grid-cols-4 gap-6">
+    {[
+      ["Why Us", "Faster delivery, sharper shortlists, zero fluff."],
+      ["AI + Human", "Technology accelerates sourcing, recruiters drive judgment."],
+      ["US Focused", "Built for modern companies hiring across North America."],
+      ["Always On", "Responsive communication and execution momentum."],
+    ].map((item, i) => (
+      <div
+        key={i}
+        className="p-5 rounded-2xl bg-slate-900 border border-slate-800"
+      >
+        <h3 className="font-semibold text-cyan-300 mb-2">{item[0]}</h3>
+        <p className="text-sm text-slate-400">{item[1]}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
+{/* Solutions */}
+<section
+  id="solutions"
+  className="max-w-7xl mx-auto px-6 py-20"
+>
+  <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">
+    Future-Ready Talent Solutions
+  </h2>
+
+  <p className="text-center text-slate-400 mb-12 max-w-3xl mx-auto">
+    Designed for companies that expect speed, quality, and modern execution.
+  </p>
+
+  <div className="grid md:grid-cols-3 gap-6">
+    {[
+      [
+        "Direct Hire",
+        "Permanent hiring for key growth roles with sourcing, screening, and close support.",
+      ],
+      [
+        "Contract Staffing",
+        "Fast contractor deployment for urgent delivery, launches, and specialist needs.",
+      ],
+      [
+        "Talent Intelligence",
+        "Proactive talent mapping, compensation insights, and pipeline creation.",
+      ],
+      [
+        "Executive Search",
+        "Confidential leadership hiring with high-touch candidate management.",
+      ],
+      [
+        "Embedded Recruiting",
+        "Dedicated recruiting partnership integrated into your workflow.",
+      ],
+      [
+        "Hiring Ops",
+        "Improve interviews, scorecards, pipeline flow, and offer conversion.",
+      ],
+    ].map((item, i) => (
+      <div
+        key={i}
+        className="rounded-2xl bg-slate-900 border border-slate-800 p-6 hover:border-cyan-400/40 transition"
+      >
+        <div className="text-cyan-300 text-sm mb-2">Solution</div>
+        <h3 className="text-2xl font-semibold mb-4">{item[0]}</h3>
+        <p className="text-slate-400">{item[1]}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
+</div>
