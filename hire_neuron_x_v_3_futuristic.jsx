@@ -288,7 +288,7 @@ export default function HireNeuronXV3() {
           <h2 className="text-3xl sm:text-5xl font-bold mb-4 tracking-tight">Future-Ready Talent Solutions for Modern Growth Companies</h2>
           <p className="text-slate-400">Designed for companies that expect speed, quality, and modern execution. Every engagement is built to reduce hiring friction and increase quality-of-hire.</p>
         </div>
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6 items-start">
           {SOLUTIONS.map(([t, d, more]) => (
             <Card key={t} tag="Solution" title={t} desc={d} more={more} />
           ))}
@@ -301,7 +301,7 @@ export default function HireNeuronXV3() {
           <h2 className="text-3xl sm:text-5xl font-bold mb-4 tracking-tight">Why Clients Switch To HireNeuronX</h2>
           <p className="text-slate-400">Most firms send resumes. We build outcomes.</p>
         </div>
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6 items-start">
           {WHY.map(([t, d, more]) => (
             <Card key={t} title={t} desc={d} more={more} />
           ))}
@@ -326,7 +326,7 @@ export default function HireNeuronXV3() {
           <h2 className="text-3xl sm:text-5xl font-bold mb-4 tracking-tight">Insights For Modern Hiring Leaders</h2>
           <p className="text-slate-400">Content that builds trust today and compounds SEO tomorrow.</p>
         </div>
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6 items-start">
           {INSIGHTS.map(([t, d, more]) => (
             <Card key={t} tag="Insight" title={t} desc={d} more={more} />
           ))}
@@ -340,13 +340,13 @@ export default function HireNeuronXV3() {
           <p className="text-slate-400">What modern companies value when partnering with HireNeuronX.</p>
         </div>
 
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6 mb-12">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6 mb-12 items-start">
           {TRUST.map(([t, d, more]) => (
             <Card key={t} title={t} desc={d} more={more} />
           ))}
         </div>
 
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6 mb-12">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6 mb-12 items-start">
           {TESTIMONIALS.map(([n, q, more]) => (
             <TestimonialCard key={n} name={n} quote={q} more={more} />
           ))}
