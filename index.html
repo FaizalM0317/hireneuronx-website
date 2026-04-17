@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HireNeuronX | AI-Powered Staffing & Recruiting for Growth Companies</title>
+<meta name="description" content="HireNeuronX helps modern companies hire faster through direct hire, contract staffing, executive search, and AI-enhanced recruiting systems across the USA, Canada, UK, and India." />
+<meta name="keywords" content="AI staffing agency, recruiting firm, direct hire staffing, contract staffing, executive search, hire talent fast, HireNeuronX" />
+<meta property="og:title" content="HireNeuronX | AI-Powered Staffing & Recruiting" />
+<meta property="og:description" content="Next-Gen Hiring Starts Here. AI-enhanced sourcing, precision recruiting systems, and premium execution." />
+<meta property="og:type" content="website" />
+<meta name="theme-color" content="#0b1220" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'] },
+        animation: {
+          'fade-up': 'fadeUp 0.7s ease-out both',
+          'float': 'float 6s ease-in-out infinite',
+          'glow': 'glow 3s ease-in-out infinite',
+        },
+        keyframes: {
+          fadeUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+          float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+          glow: { '0%,100%': { boxShadow: '0 0 25px rgba(34,211,238,0.25)' }, '50%': { boxShadow: '0 0 45px rgba(34,211,238,0.55)' } },
+        },
+      },
+    },
+  };
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; }
+  /* Offset so sticky header doesn't cover section headings when anchors jump */
+  section[id] { scroll-margin-top: 5.5rem; }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: #020617; }
+  ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+  ::-webkit-scrollbar-thumb:hover { background: #334155; }
+
+  /* Reveal on scroll */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease-out, transform 0.7s ease-out; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* Accordion chevron */
+  details > summary { list-style: none; }
+  details > summary::-webkit-details-marker { display: none; }
+  details .chev { transition: transform 0.3s ease; }
+  details[open] .chev { transform: rotate(180deg); }
+
+  /* Grid background */
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(34,211,238,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34,211,238,0.06) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  }
+
+  /* Primary button shine */
+  .btn-primary { position: relative; overflow: hidden; }
+  .btn-primary::after {
+    content: ''; position: absolute; top: 0; left: -75%;
+    width: 50%; height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.6s ease;
+  }
+  .btn-primary:hover::after { left: 125%; }
+
+  /* Active nav link */
+  nav a.active { color: #67e8f9; }
+  nav a.active::after {
+    content: ''; display: block; height: 2px; background: #22d3ee;
+    border-radius: 2px; margin-top: 4px;
+  }
+</style>
+</head>
+<body class="min-h-screen bg-slate-950 text-white overflow-x-hidden selection:bg-cyan-400 selection:text-slate-950 antialiased">
+
+<!-- ================= HEADER ================= -->
+<header class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/80 backdrop-blur">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+    <a href="#home" class="flex items-center gap-4">
+      <div class="h-11 w-11 rounded-2xl bg-slate-900 border border-cyan-400/30 flex items-center justify-center text-xl font-black tracking-tight shadow-[0_0_20px_rgba(34,211,238,0.2)]">
+        <span class="text-white">H</span><span class="text-cyan-400">X</span>
+      </div>
+      <div>
+        <div class="font-black text-xl sm:text-2xl tracking-tight leading-none">
+          <span class="text-white">Hire</span><span class="text-cyan-400">Neuron</span><span class="text-white">X</span>
+        </div>
+        <div class="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-slate-400 mt-1">AI-Powered Staffing. Human-Led Impact.</div>
+      </div>
+    </a>
+
+    <nav class="hidden md:flex gap-8 text-sm text-slate-300 font-medium">
+      <a href="#home" class="hover:text-cyan-300 transition-colors">Home</a>
+      <a href="#solutions" class="hover:text-cyan-300 transition-colors">Solutions</a>
+      <a href="#why" class="hover:text-cyan-300 transition-colors">Why Us</a>
+      <a href="#about" class="hover:text-cyan-300 transition-colors">About</a>
+      <a href="#insights" class="hover:text-cyan-300 transition-colors">Insights</a>
+      <a href="#contact" class="hover:text-cyan-300 transition-colors">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a href="https://linkedin.com/company/hireneuronx/" target="_blank" rel="noopener noreferrer"
+         aria-label="LinkedIn"
+         class="hidden sm:flex h-9 w-9 items-center justify-center rounded-full border border-cyan-400/30 text-cyan-300 hover:text-cyan-200 hover:border-cyan-300 hover:bg-cyan-400/5 transition-all text-xs font-semibold">in</a>
+      <a href="#contact" class="hidden md:inline-block btn-primary px-4 py-2 rounded-xl bg-cyan-400 text-slate-950 text-sm font-semibold hover:shadow-[0_0_25px_rgba(34,211,238,0.45)] transition-all">Get Started</a>
+
+      <button id="menuBtn" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileMenu"
+              class="md:hidden h-10 w-10 flex flex-col items-center justify-center gap-1.5 rounded-lg border border-slate-800 hover:border-cyan-400/40 transition-colors">
+        <span class="block w-5 h-0.5 bg-slate-200 transition-transform"></span>
+        <span class="block w-5 h-0.5 bg-slate-200 transition-opacity"></span>
+        <span class="block w-5 h-0.5 bg-slate-200 transition-transform"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobileMenu" class="md:hidden hidden border-t border-slate-800 bg-slate-950/95 backdrop-blur">
+    <nav class="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-1 text-slate-300">
+      <a href="#home" class="mobile-link px-4 py-3 rounded-lg hover:bg-slate-900 hover:text-cyan-300 transition-colors">Home</a>
+      <a href="#solutions" class="mobile-link px-4 py-3 rounded-lg hover:bg-slate-900 hover:text-cyan-300 transition-colors">Solutions</a>
+      <a href="#why" class="mobile-link px-4 py-3 rounded-lg hover:bg-slate-900 hover:text-cyan-300 transition-colors">Why Us</a>
+      <a href="#about" class="mobile-link px-4 py-3 rounded-lg hover:bg-slate-900 hover:text-cyan-300 transition-colors">About</a>
+      <a href="#insights" class="mobile-link px-4 py-3 rounded-lg hover:bg-slate-900 hover:text-cyan-300 transition-colors">Insights</a>
+      <a href="#contact" class="mobile-link px-4 py-3 rounded-lg bg-cyan-400 text-slate-950 font-semibold text-center mt-2">Get Started</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section id="home" class="relative max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24 grid md:grid-cols-2 gap-10 md:gap-12 items-center">
+  <div class="absolute inset-0 grid-bg pointer-events-none"></div>
+  <div class="absolute -top-10 -left-10 h-72 w-72 bg-cyan-500/10 blur-3xl rounded-full animate-pulse pointer-events-none"></div>
+  <div class="absolute bottom-0 right-0 h-72 w-72 bg-blue-500/10 blur-3xl rounded-full animate-pulse pointer-events-none"></div>
+
+  <div class="relative reveal">
+    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-400/10 border border-cyan-400/20 text-cyan-300 text-xs sm:text-sm mb-6">
+      <span class="h-2 w-2 rounded-full bg-cyan-400 animate-pulse"></span>
+      Built for High-Performance Teams
+    </div>
+    <h1 class="text-4xl sm:text-6xl md:text-7xl font-black leading-[1.05] mb-6 tracking-tight">
+      Next-Gen Hiring
+      <span class="bg-gradient-to-r from-cyan-300 via-cyan-400 to-blue-400 bg-clip-text text-transparent">Starts Here.</span>
+    </h1>
+    <p class="text-lg sm:text-xl text-slate-300 mb-8 max-w-xl leading-relaxed">
+      We help ambitious companies build elite teams faster through AI-enhanced sourcing, precision recruiting systems, and premium execution.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+      <a href="#contact" class="btn-primary px-6 py-3 rounded-xl bg-cyan-400 text-slate-950 font-semibold text-center shadow-[0_0_25px_rgba(34,211,238,0.35)] hover:shadow-[0_0_45px_rgba(34,211,238,0.55)] hover:-translate-y-0.5 transition-all">
+        Schedule Strategy Call
+      </a>
+      <a href="#solutions" class="px-6 py-3 rounded-xl border border-slate-700 hover:border-cyan-400 hover:text-cyan-300 hover:bg-cyan-400/5 text-center transition-all">
+        See Solutions
+      </a>
+    </div>
+    <div class="grid grid-cols-3 gap-2 sm:gap-4 mt-10 text-center">
+      <div>
+        <div class="text-2xl sm:text-3xl font-bold text-cyan-300">72h</div>
+        <div class="text-xs text-slate-400 mt-1">Shortlist Speed</div>
+      </div>
+      <div class="border-x border-slate-800">
+        <div class="text-2xl sm:text-3xl font-bold text-cyan-300">Top 5%</div>
+        <div class="text-xs text-slate-400 mt-1">Talent Quality</div>
+      </div>
+      <div>
+        <div class="text-2xl sm:text-3xl font-bold text-cyan-300">24/7</div>
+        <div class="text-xs text-slate-400 mt-1">Execution Mode</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="relative reveal rounded-3xl border border-cyan-400/20 bg-gradient-to-br from-cyan-500/10 via-blue-500/10 to-purple-500/10 p-6 sm:p-8 shadow-[0_0_60px_rgba(34,211,238,0.08)] hover:scale-[1.02] transition-all duration-500 backdrop-blur">
+    <div class="rounded-2xl bg-slate-900/95 p-6 sm:p-8 min-h-[420px] flex flex-col justify-between border border-slate-800 relative overflow-hidden">
+      <div class="absolute -top-10 -right-10 h-40 w-40 bg-cyan-400/10 blur-3xl rounded-full"></div>
+      <div class="relative">
+        <div class="flex items-center gap-2 text-cyan-300 text-sm mb-3">
+          <span class="h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
+          AI Talent Engine
+        </div>
+        <div class="text-2xl sm:text-3xl font-bold mb-4">Faster Sourcing. Smarter Hiring.</div>
+        <div class="h-px w-24 bg-gradient-to-r from-cyan-400/70 to-transparent mb-4"></div>
+        <p class="text-slate-400 leading-relaxed">Automation supports recruiters. Human judgment closes exceptional hires.</p>
+      </div>
+      <div class="grid grid-cols-2 gap-3 sm:gap-4 mt-8 relative">
+        <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700/50">
+          <div class="text-xs text-slate-400 mb-1">Live Pipelines</div>
+          <div class="font-semibold flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-green-400 animate-pulse"></span>Active</div>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700/50">
+          <div class="text-xs text-slate-400 mb-1">Response Rate</div>
+          <div class="font-semibold text-cyan-300">High</div>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700/50">
+          <div class="text-xs text-slate-400 mb-1">Coverage</div>
+          <div class="font-semibold">US • CA • UK • IN</div>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700/50">
+          <div class="text-xs text-slate-400 mb-1">Avg. Time-to-Fill</div>
+          <div class="font-semibold text-cyan-300">-43%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VALUE BAR ================= -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+    <div class="reveal p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-cyan-400/30 transition-colors">
+      <h3 class="font-semibold text-cyan-300 mb-2">Why Us</h3>
+      <p class="text-sm text-slate-400">Faster delivery, sharper shortlists, zero fluff.</p>
+    </div>
+    <div class="reveal p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-cyan-400/30 transition-colors">
+      <h3 class="font-semibold text-cyan-300 mb-2">AI + Human</h3>
+      <p class="text-sm text-slate-400">Technology accelerates sourcing, recruiters drive judgment.</p>
+    </div>
+    <div class="reveal p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-cyan-400/30 transition-colors">
+      <h3 class="font-semibold text-cyan-300 mb-2">US Focused</h3>
+      <p class="text-sm text-slate-400">Built for modern companies hiring across North America.</p>
+    </div>
+    <div class="reveal p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-cyan-400/30 transition-colors">
+      <h3 class="font-semibold text-cyan-300 mb-2">Always On</h3>
+      <p class="text-sm text-slate-400">Responsive communication and execution momentum.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SOLUTIONS ================= -->
+<section id="solutions" class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+  <div class="text-center max-w-3xl mx-auto mb-12 reveal">
+    <div class="inline-block px-3 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/20 text-cyan-300 text-xs uppercase tracking-widest mb-4">Solutions</div>
+    <h2 class="text-3xl sm:text-5xl font-bold mb-4 tracking-tight">Future-Ready Talent Solutions for Modern Growth Companies</h2>
+    <p class="text-slate-400">Designed for companies that expect speed, quality, and modern execution. Every engagement is built to reduce hiring friction and increase quality-of-hire.</p>
+  </div>
+
+  <div id="solutionsGrid" class="grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6"></div>
+</section>
+
+<!-- ================= WHY US ================= -->
+<section id="why" class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+  <div class="text-center max-w-3xl mx-auto mb-12 reveal">
+    <h2 class="text-3xl sm:text-5xl font-bold mb-4 tracking-tight">Why Clients Switch To HireNeuronX</h2>
+    <p class="text-slate-400">Most firms send resumes. We build outcomes.</p>
+  </div>
+
+  <div id="whyGrid" class="grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6"></div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about" class="relative bg-slate-900/50 py-20 sm:py-24 border-y border-slate-800/60">
+  <div class="absolute inset-0 grid-bg opacity-40 pointer-events-none"></div>
+  <div class="relative max-w-5xl mx-auto px-6 text-center reveal">
+    <div class="inline-block px-3 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/20 text-cyan-300 text-xs uppercase tracking-widest mb-4">About</div>
+    <h2 class="text-3xl sm:text-5xl font-bold mb-6 tracking-tight">Built For A New Standard In Hiring</h2>
+    <p class="text-lg sm:text-xl text-slate-300 leading-relaxed">
+      Traditional recruiting is often slow, reactive, and overloaded with noise. HireNeuronX combines recruiter expertise, AI-assisted workflows, outbound talent intelligence, and disciplined execution to deliver stronger hiring outcomes. We operate like a strategic growth partner focused on measurable results — not a resume vendor.
+    </p>
+  </div>
+</section>
+
+<!-- ================= INSIGHTS ================= -->
+<section id="insights" class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+  <div class="text-center max-w-3xl mx-auto mb-12 reveal">
+    <div class="inline-block px-3 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/20 text-cyan-300 text-xs uppercase tracking-widest mb-4">Insights</div>
+    <h2 class="text-3xl sm:text-5xl font-bold mb-4 tracking-tight">Insights For Modern Hiring Leaders</h2>
+    <p class="text-slate-400">Content that builds trust today and compounds SEO tomorrow.</p>
+  </div>
+
+  <div id="insightsGrid" class="grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6"></div>
+</section>
+
+<!-- ================= TRUST / TESTIMONIALS ================= -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+  <div class="text-center max-w-3xl mx-auto mb-12 reveal">
+    <h2 class="text-3xl sm:text-5xl font-bold mb-4 tracking-tight">Trusted By Growth-Minded Teams</h2>
+    <p class="text-slate-400">What modern companies value when partnering with HireNeuronX.</p>
+  </div>
+
+  <div id="trustGrid" class="grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6 mb-12"></div>
+  <div id="testimonialsGrid" class="grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6 mb-12"></div>
+
+  <div class="relative overflow-hidden rounded-3xl border border-cyan-400/20 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10 p-8 sm:p-12 text-center reveal">
+    <div class="absolute -top-20 -right-20 h-60 w-60 bg-cyan-400/20 blur-3xl rounded-full"></div>
+    <div class="absolute -bottom-20 -left-20 h-60 w-60 bg-blue-400/20 blur-3xl rounded-full"></div>
+    <div class="relative">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-4 tracking-tight">Ready To Upgrade Your Hiring Engine?</h2>
+      <p class="text-slate-300 mb-6 max-w-2xl mx-auto">Partner with HireNeuronX to build stronger teams, hire faster than competitors, and create long-term hiring momentum that compounds over time.</p>
+      <a href="#contact" class="btn-primary inline-block px-6 py-3 rounded-xl bg-cyan-400 text-slate-950 font-semibold hover:shadow-[0_0_30px_rgba(34,211,238,0.45)] hover:-translate-y-0.5 transition-all">Discuss Hiring Goals</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+  <div class="rounded-3xl border border-slate-800 bg-slate-900 p-6 sm:p-10 relative overflow-hidden reveal">
+    <div class="absolute -top-20 -right-20 h-60 w-60 bg-cyan-400/10 blur-3xl rounded-full pointer-events-none"></div>
+    <div class="relative">
+      <div class="inline-block px-3 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/20 text-cyan-300 text-xs uppercase tracking-widest mb-4">Contact</div>
+      <h2 class="text-3xl sm:text-5xl font-bold mb-4 tracking-tight">Let's Build Your Future Team</h2>
+      <p class="text-slate-400 mb-8 max-w-2xl">Tell us what you need. We'll build a hiring strategy that moves fast, attracts stronger talent, and gives you a real hiring edge.</p>
+
+      <form id="contactForm" action="https://formsubmit.co/Connect@HireNeuronX.com" method="POST"
+            class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_subject" value="New HireNeuronX Website Inquiry" />
+        <input type="hidden" name="_template" value="table" />
+
+        <label class="block">
+          <span class="block text-xs text-slate-400 mb-1.5 ml-1">Full Name *</span>
+          <input name="name" required autocomplete="name"
+                 class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all placeholder:text-slate-600"
+                 placeholder="Jane Doe" />
+        </label>
+        <label class="block">
+          <span class="block text-xs text-slate-400 mb-1.5 ml-1">Work Email *</span>
+          <input type="email" name="email" required autocomplete="email"
+                 class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all placeholder:text-slate-600"
+                 placeholder="jane@company.com" />
+        </label>
+        <label class="block md:col-span-2">
+          <span class="block text-xs text-slate-400 mb-1.5 ml-1">Company</span>
+          <input name="company" autocomplete="organization"
+                 class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all placeholder:text-slate-600"
+                 placeholder="Company Inc." />
+        </label>
+        <label class="block md:col-span-2">
+          <span class="block text-xs text-slate-400 mb-1.5 ml-1">Hiring Goals *</span>
+          <textarea name="message" required rows="5"
+                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all placeholder:text-slate-600 resize-y"
+                    placeholder="Roles needed, urgency, timeline..."></textarea>
+        </label>
+        <div class="md:col-span-2 flex flex-col sm:flex-row items-start sm:items-center gap-4 mt-2">
+          <button type="submit"
+                  class="btn-primary w-full sm:w-auto px-6 py-3 rounded-xl bg-cyan-400 text-slate-950 font-semibold hover:shadow-[0_0_30px_rgba(34,211,238,0.45)] hover:-translate-y-0.5 transition-all">
+            Request Hiring Consultation
+          </button>
+          <a href="mailto:Connect@HireNeuronX.com" class="text-cyan-300 hover:text-cyan-200 transition-colors text-sm">
+            Or email us directly → Connect@HireNeuronX.com
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="border-t border-slate-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex flex-col md:flex-row gap-6 justify-between items-center md:items-start text-center md:text-left text-sm text-slate-400">
+    <div>
+      <div class="font-bold text-base mb-1">
+        <span class="text-white">Hire</span><span class="text-cyan-400">Neuron</span><span class="text-white">X</span>
+      </div>
+      <div>Future Hiring. Elite Execution.</div>
+      <div class="mt-3 text-xs text-slate-500">© <span id="year"></span> HireNeuronX. All rights reserved.</div>
+    </div>
+    <div class="flex flex-col sm:flex-row items-center gap-4">
+      <a href="mailto:Connect@HireNeuronX.com" class="hover:text-cyan-300 transition-colors">Connect@HireNeuronX.com</a>
+      <a href="https://linkedin.com/company/hireneuronx/" target="_blank" rel="noopener noreferrer"
+         class="text-cyan-300 hover:text-cyan-200 transition-colors">LinkedIn →</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // --- Data ---
+  const solutions = [
+    ['Direct Hire','Critical permanent hires for growth-stage teams.','Permanent hiring for key growth roles with sourcing, screening, and close support.'],
+    ['Contract Staffing','Flexible talent for urgent projects and rapid scale.','Fast contractor deployment for urgent delivery, launches, and specialist needs.'],
+    ['Talent Intelligence','Market mapping, pipelines, and competitor insights.','Proactive talent mapping, compensation insights, and pipeline creation.'],
+    ['Executive Search','Leadership hiring with precision targeting.','Confidential leadership hiring with high-touch candidate management.'],
+    ['Embedded Recruiting','We operate like an extension of your internal team.','Dedicated recruiting partnership integrated into your workflow.'],
+    ['Hiring Ops','Interview systems, process design, and closing support.','Improve interviews, scorecards, pipeline flow, and offer conversion.'],
+  ];
+
+  const why = [
+    ['Speed Without Chaos','Structured hiring sprints with consistent updates.','We run organized hiring sprints with clear ownership, fast feedback cycles, and weekly reporting so momentum stays high without confusion.'],
+    ['Better Talent Density','Fewer resumes, stronger candidates.','We prioritize relevance, readiness, and fit so your team spends time with stronger candidates instead of sorting resume volume.'],
+    ['Brand-Level Partnership','We represent your company professionally in-market.','Every outreach message, candidate interaction, and handoff reflects positively on your brand and builds trust with top talent.'],
+  ];
+
+  const insights = [
+    ['How To Hire Fast Without Lowering Standards','Frameworks for urgent growth hiring.','Speed hiring only works when standards stay high. Use scorecards, tighter intake calls, parallel interviews, and faster feedback loops to reduce delays while protecting quality-of-hire.'],
+    ['AI In Recruiting: Hype vs Value','Where automation truly helps.','AI works best when it removes admin work, improves sourcing reach, and surfaces insights. Human recruiters still matter most for judgment, relationships, and closing top candidates.'],
+    ['Building Teams That Scale','Hiring systems for startups and SMBs.','Scaling teams need repeatable systems: clear hiring plans, defined competencies, interviewer training, and pipeline visibility. Strong process creates consistent growth hiring.'],
+  ];
+
+  const trust = [
+    ['High Signal Candidates','Shortlists focused on quality, relevance, and readiness.','Every shortlist is intentionally curated for fit, capability, and readiness so your hiring team spends time with candidates worth meeting.'],
+    ['Fast Execution','Momentum-driven recruiting with consistent updates.','Fast scheduling, clear ownership, and weekly progress updates keep hiring momentum high from intake to offer stage.'],
+    ['Professional Representation','We strengthen your employer brand in-market.','Every outreach message and candidate interaction reflects your brand professionally, creating stronger trust with top talent.'],
+  ];
+
+  const testimonials = [
+    ['VP Talent, SaaS Company','"Responsive, sharp, and significantly better candidate quality."','They quickly understood our hiring profile, calibrated fast, and consistently delivered candidates worth interviewing.'],
+    ['Founder, Startup Team','"They moved faster than larger firms and understood our urgency."','Execution was fast, communication was clear, and they adapted to changing priorities without losing momentum.'],
+    ['Hiring Manager, Tech Ops','"Structured process, clear communication, strong hires."','From intake to offer stage, the process felt organized, transparent, and focused on quality outcomes.'],
+  ];
+
+  // --- Template helpers ---
+  const chev = `<svg class="chev h-5 w-5 text-cyan-300 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>`;
+
+  const card = (tag, title, desc, more) => `
+    <details class="reveal group rounded-2xl bg-slate-900 border border-slate-800 hover:border-cyan-400/40 hover:shadow-[0_0_30px_rgba(34,211,238,0.08)] transition-all duration-300 overflow-hidden">
+      <summary class="cursor-pointer p-6 flex items-start gap-4 select-none">
+        <div class="flex-1">
+          ${tag ? `<div class="text-cyan-300 text-xs uppercase tracking-widest mb-2">${tag}</div>` : ''}
+          <h3 class="text-xl sm:text-2xl font-semibold mb-2 group-hover:text-cyan-100 transition-colors">${title}</h3>
+          <p class="text-slate-400 text-sm sm:text-base">${desc}</p>
+        </div>
+        ${chev}
+      </summary>
+      <div class="px-6 pb-6 pt-1 text-slate-300 leading-7 border-t border-slate-800/60">${more}</div>
+    </details>`;
+
+  const testimonialCard = (name, quote, more) => `
+    <details class="reveal group rounded-2xl bg-slate-900 border border-slate-800 hover:border-cyan-400/40 transition-all duration-300 overflow-hidden">
+      <summary class="cursor-pointer p-6 flex items-start gap-4 select-none">
+        <div class="flex-1">
+          <div class="text-cyan-300 text-xs uppercase tracking-widest mb-3">Client Feedback</div>
+          <p class="text-slate-200 text-base sm:text-lg leading-relaxed mb-4">${quote}</p>
+          <div class="text-sm text-slate-500">— ${name}</div>
+        </div>
+        ${chev}
+      </summary>
+      <div class="px-6 pb-6 pt-1 text-slate-300 leading-7 border-t border-slate-800/60">${more}</div>
+    </details>`;
+
+  // --- Render ---
+  document.getElementById('solutionsGrid').innerHTML = solutions.map(([t,d,m]) => card('Solution', t, d, m)).join('');
+  document.getElementById('whyGrid').innerHTML = why.map(([t,d,m]) => card('', t, d, m)).join('');
+  document.getElementById('insightsGrid').innerHTML = insights.map(([t,d,m]) => card('Insight', t, d, m)).join('');
+  document.getElementById('trustGrid').innerHTML = trust.map(([t,d,m]) => card('', t, d, m)).join('');
+  document.getElementById('testimonialsGrid').innerHTML = testimonials.map(([n,q,m]) => testimonialCard(n, q, m)).join('');
+
+  // --- Mobile menu toggle ---
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click', () => {
+    const isOpen = !mobileMenu.classList.contains('hidden');
+    mobileMenu.classList.toggle('hidden');
+    menuBtn.setAttribute('aria-expanded', String(!isOpen));
+  });
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // --- Reveal on scroll ---
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // --- Active nav link on scroll ---
+  const sections = ['home','solutions','why','about','insights','contact']
+    .map(id => document.getElementById(id)).filter(Boolean);
+  const navLinks = document.querySelectorAll('header nav a[href^="#"]');
+  const setActive = () => {
+    const y = window.scrollY + 120;
+    let current = sections[0]?.id;
+    for (const s of sections) { if (s.offsetTop <= y) current = s.id; }
+    navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+  };
+  window.addEventListener('scroll', setActive, { passive: true });
+  setActive();
+
+  // --- Footer year ---
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
