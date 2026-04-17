@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HireNeuronX — Insights Portal</title>
+<meta name="robots" content="noindex, nofollow" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: { extend: { fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'] } } }
+  };
+</script>
+
+<style>
+  body { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: #020617; }
+  ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+  ::-webkit-scrollbar-thumb:hover { background: #334155; }
+  .toast { animation: slideIn .3s ease-out; }
+  @keyframes slideIn { from { transform: translateY(-10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+</style>
+</head>
+<body class="min-h-screen bg-slate-950 text-white overflow-x-hidden antialiased">
+
+<!-- Header -->
+<header class="sticky top-0 z-40 border-b border-slate-800 bg-slate-950/85 backdrop-blur">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
+    <a href="./index.html" class="flex items-center gap-3">
+      <div class="h-10 w-10 rounded-xl bg-slate-900 border border-cyan-400/30 flex items-center justify-center text-lg font-black">
+        <span class="text-white">H</span><span class="text-cyan-400">X</span>
+      </div>
+      <div>
+        <div class="font-black text-lg tracking-tight leading-none">
+          <span class="text-white">Hire</span><span class="text-cyan-400">Neuron</span><span class="text-white">X</span>
+        </div>
+        <div class="text-[10px] uppercase tracking-[0.2em] text-slate-400 mt-1">Insights Portal</div>
+      </div>
+    </a>
+    <div class="flex items-center gap-2 sm:gap-3 flex-wrap justify-end">
+      <button id="importBtn" class="px-3 sm:px-4 py-2 rounded-lg border border-slate-700 hover:border-cyan-400 hover:text-cyan-300 hover:bg-cyan-400/5 text-sm transition-all">
+        Import JSON
+      </button>
+      <input id="importFile" type="file" accept="application/json,.json" class="hidden" />
+      <button id="reloadBtn" class="px-3 sm:px-4 py-2 rounded-lg border border-slate-700 hover:border-cyan-400 hover:text-cyan-300 hover:bg-cyan-400/5 text-sm transition-all">
+        Reload File
+      </button>
+      <button id="exportBtn" class="px-3 sm:px-4 py-2 rounded-lg bg-cyan-400 text-slate-950 text-sm font-semibold hover:shadow-[0_0_25px_rgba(34,211,238,0.45)] transition-all">
+        Export insights.json
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Toast -->
+<div id="toast" class="fixed top-20 right-4 z-50 hidden"></div>
+
+<!-- Body -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 grid lg:grid-cols-[380px,1fr] gap-6 items-start">
+
+  <!-- Post list -->
+  <aside class="rounded-2xl border border-slate-800 bg-slate-900 p-4 sm:p-5">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-lg font-semibold">
+        Posts <span id="postCount" class="text-slate-500 text-sm font-normal ml-1"></span>
+      </h2>
+      <button id="newBtn" class="px-3 py-1.5 rounded-lg bg-cyan-400 text-slate-950 text-xs font-semibold hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all">
+        + New
+      </button>
+    </div>
+    <input id="searchInput" type="search" placeholder="Search posts..."
+           class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 mb-3 text-sm focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all placeholder:text-slate-600" />
+    <div id="postList" class="flex flex-col gap-2 max-h-[65vh] overflow-y-auto pr-1"></div>
+  </aside>
+
+  <!-- Editor -->
+  <section class="rounded-2xl border border-slate-800 bg-slate-900 p-4 sm:p-6 min-h-[70vh]">
+    <div id="emptyState" class="flex flex-col items-center justify-center text-center py-20 text-slate-400">
+      <div class="h-14 w-14 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center text-2xl mb-4">
+        <span class="text-cyan-300">+</span>
+      </div>
+      <p class="text-lg mb-1">No post selected</p>
+      <p class="text-sm text-slate-500">Pick one from the list or create a new post.</p>
+    </div>
+
+    <form id="editor" class="hidden">
+      <div class="flex items-center justify-between mb-5 gap-3 flex-wrap">
+        <div class="flex items-center gap-2">
+          <label class="flex items-center gap-2 text-xs uppercase tracking-widest text-slate-400 bg-slate-800/60 border border-slate-700 px-3 py-1.5 rounded-full cursor-pointer">
+            <input id="f_published" type="checkbox" class="accent-cyan-400" />
+            <span id="publishedLabel">Draft</span>
+          </label>
+          <span id="idBadge" class="text-xs text-slate-500 font-mono truncate max-w-[180px]"></span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" id="duplicateBtn" class="px-3 py-1.5 rounded-lg border border-slate-700 hover:border-cyan-400 hover:text-cyan-300 text-xs transition-all">Duplicate</button>
+          <button type="button" id="deleteBtn" class="px-3 py-1.5 rounded-lg border border-rose-500/40 text-rose-300 hover:bg-rose-500/10 text-xs transition-all">Delete</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <label class="block md:col-span-2">
+          <span class="block text-xs text-slate-400 mb-1.5 ml-1">Title *</span>
+          <input id="f_title" required maxlength="140"
+            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all placeholder:text-slate-600"
+            placeholder="How To Hire Fast Without Lowering Standards" />
+        </label>
+        <label class="block md:col-span-2">
+          <span class="block text-xs text-slate-400 mb-1.5 ml-1">Subtitle</span>
+          <input id="f_subtitle" maxlength="200"
+            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all placeholder:text-slate-600"
+            placeholder="Frameworks for urgent growth hiring." />
+        </label>
+        <label class="block">
+          <span class="block text-xs text-slate-400 mb-1.5 ml-1">Author</span>
+          <input id="f_author"
+            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all placeholder:text-slate-600"
+            placeholder="HireNeuronX Team" />
+        </label>
+        <label class="block">
+          <span class="block text-xs text-slate-400 mb-1.5 ml-1">Date</span>
+          <input id="f_date" type="date"
+            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all" />
+        </label>
+        <label class="block md:col-span-2">
+          <span class="block text-xs text-slate-400 mb-1.5 ml-1">Tags <span class="text-slate-600">(comma separated)</span></span>
+          <input id="f_tags"
+            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all placeholder:text-slate-600"
+            placeholder="speed, quality, process" />
+        </label>
+        <label class="block md:col-span-2">
+          <span class="block text-xs text-slate-400 mb-1.5 ml-1">Summary <span class="text-slate-600">(shown when a card expands)</span></span>
+          <textarea id="f_summary" rows="4"
+            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all placeholder:text-slate-600 resize-y"
+            placeholder="1–3 sentence summary that shows when the card is expanded on the landing page."></textarea>
+        </label>
+        <label class="block md:col-span-2">
+          <span class="flex items-center justify-between text-xs text-slate-400 mb-1.5 ml-1">
+            <span>Body <span class="text-slate-600">(optional full article, plain text or HTML)</span></span>
+            <span id="bodyCount" class="text-slate-600"></span>
+          </span>
+          <textarea id="f_body" rows="10"
+            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all placeholder:text-slate-600 resize-y font-mono text-sm"
+            placeholder="Full article content. Paragraphs are separated by blank lines. Basic HTML tags are allowed."></textarea>
+        </label>
+      </div>
+
+      <!-- Preview -->
+      <div class="mt-6">
+        <div class="text-xs uppercase tracking-widest text-slate-400 mb-2">Live Preview (matches landing page card)</div>
+        <div id="preview" class="rounded-2xl bg-slate-950 border border-slate-800"></div>
+      </div>
+    </form>
+  </section>
+</main>
+
+<footer class="max-w-7xl mx-auto px-4 sm:px-6 py-8 text-xs text-slate-500">
+  Drafts are auto-saved to this browser. Click <span class="text-cyan-300">Export insights.json</span> when done and commit the file to the repo to publish.
+</footer>
+
+<script>
+  // ------------ State ------------
+  const STORAGE_KEY = 'hnx_insights_draft_v1';
+  let state = { posts: [] };
+  let selectedId = null;
+  let searchTerm = '';
+  let dirty = false;
+
+  // ------------ Helpers ------------
+  const $ = (id) => document.getElementById(id);
+  const toast = (msg, kind = 'ok') => {
+    const el = $('toast');
+    const bg = kind === 'err' ? 'bg-rose-500/90 border-rose-400' : kind === 'warn' ? 'bg-amber-500/90 border-amber-400' : 'bg-cyan-400/90 border-cyan-300';
+    el.className = `fixed top-20 right-4 z-50 toast px-4 py-2.5 rounded-xl border text-sm font-medium text-slate-950 shadow-lg ${bg}`;
+    el.textContent = msg;
+    el.classList.remove('hidden');
+    clearTimeout(el._t);
+    el._t = setTimeout(() => el.classList.add('hidden'), 2400);
+  };
+  const slugify = (s) => (s || '').toString().toLowerCase().trim()
+    .replace(/['"`]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 80) || ('post-' + Date.now().toString(36));
+  const uniqueId = (base) => {
+    let id = base, n = 2;
+    while (state.posts.some(p => p.id === id && p !== currentPost())) { id = `${base}-${n++}`; }
+    return id;
+  };
+  const esc = (s) => (s ?? '').toString().replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const todayIso = () => new Date().toISOString().slice(0, 10);
+  const currentPost = () => state.posts.find(p => p.id === selectedId) || null;
+
+  const normalizePost = (p = {}) => ({
+    id: p.id || slugify(p.title) || ('post-' + Date.now().toString(36)),
+    title: p.title || 'Untitled Post',
+    subtitle: p.subtitle || '',
+    summary: p.summary || '',
+    body: p.body || '',
+    author: p.author || '',
+    date: p.date || todayIso(),
+    tags: Array.isArray(p.tags) ? p.tags : (typeof p.tags === 'string' ? p.tags.split(',').map(t => t.trim()).filter(Boolean) : []),
+    published: p.published !== false,
+  });
+
+  // ------------ Persistence ------------
+  const saveDraft = () => {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch {}
+  };
+  const loadDraft = () => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && Array.isArray(parsed.posts)) return parsed;
+      }
+    } catch {}
+    return null;
+  };
+
+  async function loadFromFile() {
+    try {
+      const res = await fetch('./insights.json', { cache: 'no-store' });
+      if (!res.ok) throw new Error('Not found');
+      const data = await res.json();
+      if (!data || !Array.isArray(data.posts)) throw new Error('Invalid format');
+      state = { posts: data.posts.map(normalizePost) };
+      saveDraft();
+      dirty = false;
+      selectedId = state.posts[0]?.id || null;
+      render();
+      toast('Loaded insights.json from disk');
+    } catch (e) {
+      toast('Could not fetch insights.json (open admin.html via a local server for live reload)', 'warn');
+    }
+  }
+
+  // ------------ Render ------------
+  function renderList() {
+    const list = $('postList');
+    const term = searchTerm.toLowerCase();
+    const filtered = state.posts.filter(p => {
+      if (!term) return true;
+      return (p.title + ' ' + p.subtitle + ' ' + p.summary + ' ' + (p.tags || []).join(' ')).toLowerCase().includes(term);
+    });
+    $('postCount').textContent = state.posts.length ? `(${state.posts.length})` : '';
+
+    if (!filtered.length) {
+      list.innerHTML = `<div class="text-center text-slate-500 text-sm py-6">${state.posts.length ? 'No matches.' : 'No posts yet. Click <span class=\"text-cyan-300\">+ New</span>.'}</div>`;
+      return;
+    }
+
+    list.innerHTML = filtered.map(p => {
+      const active = p.id === selectedId;
+      const statusDot = p.published
+        ? '<span class="h-1.5 w-1.5 rounded-full bg-green-400"></span><span class="text-green-300">Published</span>'
+        : '<span class="h-1.5 w-1.5 rounded-full bg-slate-500"></span><span class="text-slate-400">Draft</span>';
+      return `
+        <button type="button" data-id="${esc(p.id)}"
+          class="post-item text-left w-full rounded-xl p-3 border transition-all
+            ${active ? 'bg-cyan-400/10 border-cyan-400/50' : 'bg-slate-950 border-slate-800 hover:border-cyan-400/40'}">
+          <div class="font-semibold text-sm leading-tight mb-1 line-clamp-2">${esc(p.title || 'Untitled')}</div>
+          <div class="text-xs text-slate-400 line-clamp-1">${esc(p.subtitle || ' ')}</div>
+          <div class="flex items-center gap-2 mt-2 text-[10px] uppercase tracking-wider">
+            ${statusDot}
+            <span class="text-slate-600">•</span>
+            <span class="text-slate-500">${esc(p.date || '')}</span>
+          </div>
+        </button>`;
+    }).join('');
+
+    list.querySelectorAll('.post-item').forEach(btn => {
+      btn.addEventListener('click', () => selectPost(btn.dataset.id));
+    });
+  }
+
+  function renderEditor() {
+    const p = currentPost();
+    const empty = $('emptyState');
+    const form = $('editor');
+    if (!p) {
+      empty.classList.remove('hidden');
+      form.classList.add('hidden');
+      return;
+    }
+    empty.classList.add('hidden');
+    form.classList.remove('hidden');
+
+    $('f_title').value = p.title || '';
+    $('f_subtitle').value = p.subtitle || '';
+    $('f_summary').value = p.summary || '';
+    $('f_body').value = p.body || '';
+    $('f_author').value = p.author || '';
+    $('f_date').value = p.date || '';
+    $('f_tags').value = (p.tags || []).join(', ');
+    $('f_published').checked = !!p.published;
+    $('publishedLabel').textContent = p.published ? 'Published' : 'Draft';
+    $('idBadge').textContent = 'id: ' + p.id;
+    $('bodyCount').textContent = (p.body || '').length + ' chars';
+    renderPreview();
+  }
+
+  function renderPreview() {
+    const p = currentPost();
+    if (!p) return;
+    const tagHtml = (p.tags || []).map(t => `<span class="px-2 py-0.5 rounded-full bg-slate-800 border border-slate-700 text-[10px] text-slate-300">${esc(t)}</span>`).join(' ');
+    const bodyHtml = p.body ? `<div class="mt-3 pt-3 border-t border-slate-800 text-slate-300 leading-7 whitespace-pre-wrap">${esc(p.body)}</div>` : '';
+    $('preview').innerHTML = `
+      <div class="rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden">
+        <div class="p-6">
+          <div class="text-cyan-300 text-xs uppercase tracking-widest mb-2">Insight</div>
+          <h3 class="text-xl sm:text-2xl font-semibold mb-2">${esc(p.title || 'Untitled Post')}</h3>
+          <p class="text-slate-400 text-sm sm:text-base">${esc(p.subtitle || '')}</p>
+          <div class="text-slate-300 leading-7 mt-4 pt-4 border-t border-slate-800/60">${esc(p.summary || '')}</div>
+          ${bodyHtml}
+          <div class="mt-4 flex items-center gap-3 text-xs text-slate-500">
+            <span>${esc(p.author || '')}</span>
+            ${p.author && p.date ? '<span>•</span>' : ''}
+            <span>${esc(p.date || '')}</span>
+            ${tagHtml ? '<span>•</span>' : ''}
+            <span class="flex flex-wrap gap-1">${tagHtml}</span>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function render() {
+    renderList();
+    renderEditor();
+  }
+
+  // ------------ Actions ------------
+  function selectPost(id) {
+    selectedId = id;
+    render();
+  }
+
+  function newPost() {
+    const p = normalizePost({
+      title: 'Untitled Post',
+      author: state.posts[0]?.author || 'HireNeuronX Team',
+      published: false,
+    });
+    p.id = uniqueId(slugify(p.title));
+    state.posts.unshift(p);
+    selectedId = p.id;
+    dirty = true;
+    saveDraft();
+    render();
+    setTimeout(() => $('f_title').select(), 60);
+  }
+
+  function duplicatePost() {
+    const p = currentPost();
+    if (!p) return;
+    const copy = normalizePost({ ...p, title: p.title + ' (copy)', published: false });
+    copy.id = uniqueId(slugify(copy.title));
+    const idx = state.posts.findIndex(x => x.id === p.id);
+    state.posts.splice(idx + 1, 0, copy);
+    selectedId = copy.id;
+    dirty = true;
+    saveDraft();
+    render();
+    toast('Post duplicated');
+  }
+
+  function deletePost() {
+    const p = currentPost();
+    if (!p) return;
+    if (!confirm(`Delete "${p.title}"? This cannot be undone (until you re-import).`)) return;
+    const idx = state.posts.findIndex(x => x.id === p.id);
+    state.posts.splice(idx, 1);
+    selectedId = state.posts[idx]?.id || state.posts[idx - 1]?.id || null;
+    dirty = true;
+    saveDraft();
+    render();
+    toast('Post deleted');
+  }
+
+  function commitFieldsToPost() {
+    const p = currentPost();
+    if (!p) return;
+    const newTitle = $('f_title').value.trim() || 'Untitled Post';
+    const titleChanged = newTitle !== p.title;
+    p.title = newTitle;
+    p.subtitle = $('f_subtitle').value.trim();
+    p.summary = $('f_summary').value.trim();
+    p.body = $('f_body').value;
+    p.author = $('f_author').value.trim();
+    p.date = $('f_date').value || todayIso();
+    p.tags = $('f_tags').value.split(',').map(t => t.trim()).filter(Boolean);
+    p.published = $('f_published').checked;
+
+    if (titleChanged && /^(untitled|post)/i.test(p.id)) {
+      const base = slugify(p.title);
+      p.id = uniqueId(base);
+      selectedId = p.id;
+    }
+    $('publishedLabel').textContent = p.published ? 'Published' : 'Draft';
+    $('idBadge').textContent = 'id: ' + p.id;
+    $('bodyCount').textContent = (p.body || '').length + ' chars';
+    dirty = true;
+    saveDraft();
+    renderList();
+    renderPreview();
+  }
+
+  // ------------ Import / Export ------------
+  function exportJson() {
+    state.posts.forEach(p => { if (!p.id) p.id = slugify(p.title); });
+    const clean = { posts: state.posts.map(normalizePost) };
+    const blob = new Blob([JSON.stringify(clean, null, 2) + '\n'], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'insights.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    dirty = false;
+    toast('Downloaded insights.json — commit it to publish');
+  }
+
+  function importJson(file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(reader.result);
+        const posts = Array.isArray(data) ? data : data.posts;
+        if (!Array.isArray(posts)) throw new Error('Expected { posts: [...] } or [...]');
+        state = { posts: posts.map(normalizePost) };
+        selectedId = state.posts[0]?.id || null;
+        dirty = true;
+        saveDraft();
+        render();
+        toast('Imported ' + posts.length + ' post(s)');
+      } catch (e) {
+        toast('Import failed: ' + e.message, 'err');
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  // ------------ Wire up ------------
+  $('newBtn').addEventListener('click', newPost);
+  $('duplicateBtn').addEventListener('click', duplicatePost);
+  $('deleteBtn').addEventListener('click', deletePost);
+  $('exportBtn').addEventListener('click', exportJson);
+  $('reloadBtn').addEventListener('click', () => {
+    if (dirty && !confirm('You have unsaved changes. Reload from disk and discard them?')) return;
+    loadFromFile();
+  });
+  $('importBtn').addEventListener('click', () => $('importFile').click());
+  $('importFile').addEventListener('change', (e) => {
+    const f = e.target.files?.[0];
+    if (f) importJson(f);
+    e.target.value = '';
+  });
+
+  $('searchInput').addEventListener('input', (e) => {
+    searchTerm = e.target.value;
+    renderList();
+  });
+
+  ['f_title','f_subtitle','f_summary','f_body','f_author','f_date','f_tags','f_published'].forEach(id => {
+    $(id).addEventListener('input', commitFieldsToPost);
+    $(id).addEventListener('change', commitFieldsToPost);
+  });
+
+  window.addEventListener('beforeunload', (e) => {
+    if (dirty) { e.preventDefault(); e.returnValue = ''; }
+  });
+
+  // ------------ Boot ------------
+  (async function boot() {
+    const draft = loadDraft();
+    if (draft) {
+      state = { posts: draft.posts.map(normalizePost) };
+      selectedId = state.posts[0]?.id || null;
+      render();
+      toast('Loaded local draft');
+    }
+    try {
+      const res = await fetch('./insights.json', { cache: 'no-store' });
+      if (res.ok) {
+        const fileData = await res.json();
+        if (fileData && Array.isArray(fileData.posts)) {
+          if (!draft) {
+            state = { posts: fileData.posts.map(normalizePost) };
+            selectedId = state.posts[0]?.id || null;
+            saveDraft();
+            render();
+          }
+        }
+      }
+    } catch {}
+    if (!state.posts.length) {
+      render();
+    }
+  })();
+</script>
+</body>
+</html>

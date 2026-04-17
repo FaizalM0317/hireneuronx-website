@@ -391,7 +391,8 @@
     ['Brand-Level Partnership','We represent your company professionally in-market.','Every outreach message, candidate interaction, and handoff reflects positively on your brand and builds trust with top talent.'],
   ];
 
-  const insights = [
+  // Fallback data if insights.json cannot be fetched (e.g. file:// double-click).
+  let insights = [
     ['How To Hire Fast Without Lowering Standards','Frameworks for urgent growth hiring.','Speed hiring only works when standards stay high. Use scorecards, tighter intake calls, parallel interviews, and faster feedback loops to reduce delays while protecting quality-of-hire.'],
     ['AI In Recruiting: Hype vs Value','Where automation truly helps.','AI works best when it removes admin work, improves sourcing reach, and surfaces insights. Human recruiters still matter most for judgment, relationships, and closing top candidates.'],
     ['Building Teams That Scale','Hiring systems for startups and SMBs.','Scaling teams need repeatable systems: clear hiring plans, defined competencies, interviewer training, and pipeline visibility. Strong process creates consistent growth hiring.'],
@@ -439,11 +440,28 @@
     </details>`;
 
   // --- Render ---
+  const renderInsights = () => {
+    const grid = document.getElementById('insightsGrid');
+    grid.innerHTML = insights.map(([t,d,m]) => card('Insight', t, d, m)).join('');
+    grid.querySelectorAll('.reveal').forEach(el => { if (io) io.observe(el); });
+  };
+
   document.getElementById('solutionsGrid').innerHTML = solutions.map(([t,d,m]) => card('Solution', t, d, m)).join('');
   document.getElementById('whyGrid').innerHTML = why.map(([t,d,m]) => card('', t, d, m)).join('');
-  document.getElementById('insightsGrid').innerHTML = insights.map(([t,d,m]) => card('Insight', t, d, m)).join('');
   document.getElementById('trustGrid').innerHTML = trust.map(([t,d,m]) => card('', t, d, m)).join('');
   document.getElementById('testimonialsGrid').innerHTML = testimonials.map(([n,q,m]) => testimonialCard(n, q, m)).join('');
+
+  // Load insights dynamically from insights.json (edited via admin.html)
+  fetch('./insights.json', { cache: 'no-store' })
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      const posts = data && Array.isArray(data.posts) ? data.posts.filter(p => p.published !== false) : null;
+      if (posts && posts.length) {
+        insights = posts.map(p => [p.title || 'Untitled', p.subtitle || '', p.summary || '']);
+      }
+    })
+    .catch(() => {})
+    .finally(() => renderInsights());
 
   // --- Mobile menu toggle ---
   const menuBtn = document.getElementById('menuBtn');

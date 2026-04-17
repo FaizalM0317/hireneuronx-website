@@ -1,0 +1,37 @@
+{
+  "posts": [
+    {
+      "id": "hire-fast-without-lowering-standards",
+      "title": "How To Hire Fast Without Lowering Standards",
+      "subtitle": "Frameworks for urgent growth hiring.",
+      "summary": "Speed hiring only works when standards stay high. Use scorecards, tighter intake calls, parallel interviews, and faster feedback loops to reduce delays while protecting quality-of-hire.",
+      "body": "",
+      "author": "HireNeuronX Team",
+      "date": "2026-04-01",
+      "tags": ["speed", "quality", "process"],
+      "published": true
+    },
+    {
+      "id": "ai-in-recruiting-hype-vs-value",
+      "title": "AI In Recruiting: Hype vs Value",
+      "subtitle": "Where automation truly helps.",
+      "summary": "AI works best when it removes admin work, improves sourcing reach, and surfaces insights. Human recruiters still matter most for judgment, relationships, and closing top candidates.",
+      "body": "",
+      "author": "HireNeuronX Team",
+      "date": "2026-03-20",
+      "tags": ["ai", "automation", "sourcing"],
+      "published": true
+    },
+    {
+      "id": "building-teams-that-scale",
+      "title": "Building Teams That Scale",
+      "subtitle": "Hiring systems for startups and SMBs.",
+      "summary": "Scaling teams need repeatable systems: clear hiring plans, defined competencies, interviewer training, and pipeline visibility. Strong process creates consistent growth hiring.",
+      "body": "",
+      "author": "HireNeuronX Team",
+      "date": "2026-03-05",
+      "tags": ["scaling", "systems", "startups"],
+      "published": true
+    }
+  ]
+}

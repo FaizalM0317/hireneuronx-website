@@ -16,7 +16,8 @@ const WHY = [
   ["Brand-Level Partnership", "We represent your company professionally in-market.", "Every outreach message, candidate interaction, and handoff reflects positively on your brand and builds trust with top talent."],
 ];
 
-const INSIGHTS = [
+// Fallback list. At runtime, insights are fetched from /insights.json (edited via admin.html).
+const DEFAULT_INSIGHTS = [
   ["How To Hire Fast Without Lowering Standards", "Frameworks for urgent growth hiring.", "Speed hiring only works when standards stay high. Use scorecards, tighter intake calls, parallel interviews, and faster feedback loops to reduce delays while protecting quality-of-hire."],
   ["AI In Recruiting: Hype vs Value", "Where automation truly helps.", "AI works best when it removes admin work, improves sourcing reach, and surfaces insights. Human recruiters still matter most for judgment, relationships, and closing top candidates."],
   ["Building Teams That Scale", "Hiring systems for startups and SMBs.", "Scaling teams need repeatable systems: clear hiring plans, defined competencies, interviewer training, and pipeline visibility. Strong process creates consistent growth hiring."],
@@ -86,6 +87,25 @@ function TestimonialCard({ name, quote, more }) {
 export default function HireNeuronXV3() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeId, setActiveId] = useState("home");
+  const [insights, setInsights] = useState(DEFAULT_INSIGHTS);
+
+  // Load insights from /insights.json (edited via admin.html).
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/insights.json", { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (cancelled || !data || !Array.isArray(data.posts)) return;
+        const mapped = data.posts
+          .filter((p) => p.published !== false)
+          .map((p) => [p.title || "Untitled", p.subtitle || "", p.summary || ""]);
+        if (mapped.length) setInsights(mapped);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // Active-section highlighting for nav
   useEffect(() => {
@@ -327,7 +347,7 @@ export default function HireNeuronXV3() {
           <p className="text-slate-400">Content that builds trust today and compounds SEO tomorrow.</p>
         </div>
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6 items-start">
-          {INSIGHTS.map(([t, d, more]) => (
+          {insights.map(([t, d, more]) => (
             <Card key={t} tag="Insight" title={t} desc={d} more={more} />
           ))}
         </div>
